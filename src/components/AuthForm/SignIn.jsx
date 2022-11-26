@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button} from '../../ui';
+import PropTypes from 'prop-types'
 
 function SignIn(events) {
   const {changeSing} = events;
@@ -29,6 +30,11 @@ function SignIn(events) {
       <p className='text' data-link='change-sing' onClick={changeSing}>Новый пользователь? <span>Регистрация</span> </p>
     </div>
   </>);
+}
+
+
+SignIn.propTypes = {
+  changeSing: PropTypes.func
 }
 
 export default SignIn;

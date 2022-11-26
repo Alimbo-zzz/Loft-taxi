@@ -1,20 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import {Authorized, Unauthorized} from './pages';
+import {WithAuth} from './contexts';
 
-function App() {
-  const [isAuthorized, setAuthorized] = useState(false);
-
-
+function App(events) {
+  const {isLoggedIn, logOut, logIn} = events;
 
   return (
     <div className="Wrapper">
       {
-        isAuthorized
-        ? <Authorized changeAuth={setAuthorized}/>
-        : <Unauthorized changeAuth={setAuthorized}/>
+        isLoggedIn
+        ? <Authorized/>
+        : <Unauthorized/>
       }
     </div>
   );
 }
 
-export default App;
+export default WithAuth(App);

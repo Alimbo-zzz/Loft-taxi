@@ -1,30 +1,38 @@
 import React, {useState, useEffect} from 'react';
 import './styles.css';
 import {Header, Map, Profile} from '../../components';
+import {WithAuth} from '../../contexts';
 import map_img from '../../assets/images/map.png';
 
 function Authorized(events) {
-  const {changeAuth} = events;
+  const {logOut} = events;
   const [content, setContent] = useState('map');
 
   const pages = {
-    map: <Map/>,
     profile: <Profile/>,
   }
 
 
   function clickNavItemFunc(e){
-    if(e.name === 'out') changeAuth(false);
+    if(e.name === 'out'){
+      window.confirm('Вы точно хотите выйти?') && logOut();
+    }
     else setContent(e.name);
   }
 
   return (<>
     <div className="Authorized">
 			<Header clickNavItem={clickNavItemFunc} activeContent={content}/>
-      <img src={map_img} className='map-bg'/>
-      {pages[content]}
-		</div>
+      <div className="Authorized__container">
+        <Map/>
+        {pages[content] && (
+          <div className="Page-overlay" onClick={e => setContent('map')}>
+            <div className="Page-content" onClick={e => e.stopPropagation()}>{pages[content]}</div>
+          </div>
+        )}
+      </div>
+    </div>
   </>);
 }
 
-export default Authorized;
+export default WithAuth(Authorized);
